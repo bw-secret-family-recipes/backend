@@ -58,7 +58,7 @@ router.post('/', (req, res) => {
 })
 
 // PUT a recipe
-router.put('/:id', (req, res) => {
+router.put('/:id', validateRecipeId, (req, res) => {
    const { id } = req.params;
    const changes = req.body;
 
@@ -78,7 +78,7 @@ router.put('/:id', (req, res) => {
 })
 
 // DELETE a recipe
-router.get('/:id', (req, res) => {
+router.get('/:id', validateRecipeId, (req, res) => {
    const { id } = req.params;
 
    Recipes.remove(id)
@@ -94,5 +94,23 @@ router.get('/:id', (req, res) => {
          res.status(500).json({ message: 'Server Error: Failed to delete recipe' })
       })
 })
+
+// Middleware - Validate Recipe ID
+function validateRecipeId(req, res, next) {
+   const { id } = req.params;
+
+   Recipes.findRecipeById(id)
+      .then(data => {
+         if (data) {
+            req.data = data;
+            next();
+         } else {
+            res.status(400).json({ message: 'Recipe ID not validated' })
+         }
+      })
+      .catch(err => {
+         res.status(500).json({ message: 'Server Error' })
+      })
+}
 
 module.exports = router;
