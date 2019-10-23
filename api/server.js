@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const logger = require('morgan');
 const cors = require('cors');
+require('dotenv').config();
 
 const AuthRouter = require('./users/auth-router');
 const RecipesRouter = require('./recipes/recipes-router');

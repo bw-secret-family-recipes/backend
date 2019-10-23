@@ -78,7 +78,7 @@ router.put('/:id', restricted, validateRecipeId, (req, res) => {
 })
 
 // DELETE a recipe
-router.get('/:id', restricted, validateRecipeId, (req, res) => {
+router.delete('/:id', restricted, validateRecipeId, (req, res) => {
    const { id } = req.params;
 
    Recipes.remove(id)
