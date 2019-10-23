@@ -22,6 +22,7 @@ router.get('/', restricted, (req, res) => {
       })
 })
 
+
 // GET recipes by id
 router.get('/id', restricted, (req, res) => {
    const { id } = req.params;
