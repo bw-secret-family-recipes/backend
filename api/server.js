@@ -7,8 +7,6 @@ const RecipesRouter = require('../data/recipes/recipes-router.js');
 const server = express();
 
 server.use(express.json());
-
-// Third Party Middleware
 server.use(helmet());
 server.use(logger('dev'));
 
