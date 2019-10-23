@@ -2,39 +2,37 @@ const db = require('../../data/dbConfig');
 
 module.exports = {
    find,
-   findBy,
-   findById,
+   findRecipeById,
    add,
    update,
    remove
 };
 
 function find() {
-   return db('users')
+   return db('recipes')
 }
 
-function findBy(filter) {
-   return db('users').where(filter);
+function findRecipeById(id) {
+   return db('recipes').where({ id }).first()
 }
 
-function findById(id) {
-   return db('users').where({ id }).first();
-}
-
-function add(user) {
-   return db('users').insert(user)
+function add(recipe) {
+   return db('recipes')
+      .insert(recipe)
       .then(ids => {
-         return findById(ids[0]);
+         return findRecipeById(ids[0]);
       })
 }
 
 function update(id, changes) {
-   return db('users').where({ id }).update(changes)
-      .then(user => {
-         return findById(id);
+   return db('recipes').where({ id }).update(changes)
+      .then(recipe => {
+         return findRecipeById(id)
       })
 }
 
-function remove() {
-   return db('users').where({ id }).del()
+function remove(id) {
+   return db('recipes')
+      .where({ id })
+      .del()
 }
