@@ -1,7 +1,7 @@
 const express = require('express');
 
 const Recipes = require('./recipes-model');
-// ADD RESTRICTED
+const restricted = require('../../api/users/restricted-middleware');
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.get('/router', (req, res) => {
 })
 
 // GET recipes
-router.get('/', (req, res) => {
+router.get('/', restricted, (req, res) => {
    Recipes.find()
       .then(data => {
          res.status(200).json(data);
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 })
 
 // GET recipes by id
-router.get('/id', (req, res) => {
+router.get('/id', restricted, (req, res) => {
    const { id } = req.params;
 
    Recipes.findRecipeById(id)
@@ -42,7 +42,7 @@ router.get('/id', (req, res) => {
 })
 
 // POST a new recipe
-router.post('/', (req, res) => {
+router.post('/', restricted, (req, res) => {
    const { id } = req.params;
    const recipe = req.body;
    console.log(recipe);
@@ -58,7 +58,7 @@ router.post('/', (req, res) => {
 })
 
 // PUT a recipe
-router.put('/:id', validateRecipeId, (req, res) => {
+router.put('/:id', restricted, validateRecipeId, (req, res) => {
    const { id } = req.params;
    const changes = req.body;
 
@@ -78,7 +78,7 @@ router.put('/:id', validateRecipeId, (req, res) => {
 })
 
 // DELETE a recipe
-router.get('/:id', validateRecipeId, (req, res) => {
+router.get('/:id', restricted, validateRecipeId, (req, res) => {
    const { id } = req.params;
 
    Recipes.remove(id)
