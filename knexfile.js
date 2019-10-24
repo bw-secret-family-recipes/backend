@@ -25,9 +25,11 @@ module.exports = {
       migrations: {
         directory: './data/migrations'
       },
+      ssl: true,
       seeds: {
         directory: './data/seeds'
       }
     }
   }
+  // process.env.NODE_ENV || "development"
 };
