@@ -22,7 +22,7 @@ module.exports = {
     production: {
       debug: true,
       client: 'pg',
-      connection: process.env.DATABASE_URL,
+      connection: 'postgres://robhbglcczgytm:5771f2a36931ec604ffa8291f4a829836787354be5a2bf76698108a88b86a54e@ec2-54-243-239-199.compute-1.amazonaws.com:5432/d7nb3hlr0jgsf9?ssl=true',
       migrations: {
         directory: './data/migrations'
       },
@@ -36,7 +36,5 @@ module.exports = {
       }
     }
   }
-}//[process.env.NODE_ENV || "development"]
+}[process.env.NODE_ENV || "development"]
 
-
-// postgres://qcnpktmktfdhfb:e1f8f5427145494248754b9debec703dea99ce188bafda883a810bde9ae91446@ec2-54-83-33-14.compute-1.amazonaws.com:5432/ddid9ne1jafuth
