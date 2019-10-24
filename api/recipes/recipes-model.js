@@ -18,7 +18,7 @@ function findRecipeById(id) {
 
 function add(recipe) {
    return db('recipes')
-      .insert(recipe)
+      .insert(recipe, 'id')
       .then(ids => {
          return findRecipeById(ids[0]);
       })

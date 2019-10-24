@@ -11,7 +11,7 @@ router.get('/router', (req, res) => {
 })
 
 // GET recipes
-router.get('/', restricted, (req, res) => {
+router.get('/', (req, res) => {
    Recipes.find()
       .then(data => {
          res.status(200).json(data);
