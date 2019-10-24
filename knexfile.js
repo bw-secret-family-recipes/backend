@@ -20,6 +20,7 @@ module.exports = {
       }
     },
     production: {
+      debug: true,
       client: 'pg',
       connection: process.env.DATABASE_URL,
       migrations: {
@@ -37,3 +38,5 @@ module.exports = {
   }
 }//[process.env.NODE_ENV || "development"]
 
+
+// postgres://qcnpktmktfdhfb:e1f8f5427145494248754b9debec703dea99ce188bafda883a810bde9ae91446@ec2-54-83-33-14.compute-1.amazonaws.com:5432/ddid9ne1jafuth
