@@ -9,6 +9,16 @@ router.get('/', (req, res) => {
    res.send('<h1>Auth Router Working</h1>')
 })
 
+router.get('/users', (req, res) => {
+   Users.find()
+      .then(users => {
+         res.json(users);
+      })
+      .catch(err => {
+         res.status(500).json({ message: 'Failed to get users' });
+      });
+});
+
 router.post('/register', (req, res) => {
    const user = req.body;
 
