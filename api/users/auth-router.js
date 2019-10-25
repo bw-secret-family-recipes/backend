@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const secret = require('./config/secrets')
 
 const Users = require('../users/users-model');
 
@@ -27,7 +28,7 @@ router.post('/register', (req, res) => {
 
    Users.add(user)
       .then(saved => {
-         res.status(201).json({ message: 'Accounts successfully created!' })
+         res.status(201).json({ message: 'Account successfully created!' })
       })
       .catch(err => {
          console.log(err)
@@ -36,9 +37,9 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-   let { username, password } = req.body;
+   const { username, password } = req.body;
 
-   Users.findBy({ username })
+   Users.findByUsername(username)
       .first()
       .then(user => {
          if (user && bcrypt.compareSync(password, user.password)) {
@@ -66,7 +67,7 @@ function generateToken(user) {
    const options = {
       expiresIn: '1d'
    }
-   return jwt.sign(payload, process.env.JWT_SECRET, options)
+   return jwt.sign(payload, secret.jwtSecret, options);
 }
 
 module.exports = router;
