@@ -1,7 +1,7 @@
 const express = require('express');
 
 const Recipes = require('./recipes-model');
-const restricted = require('../../api/users/restricted-middleware');
+const restricted = require('../../auth/middleware/restricted-middleware');
 
 const router = express.Router();
 
@@ -22,9 +22,8 @@ router.get('/', (req, res) => {
       })
 })
 
-
 // GET recipes by id
-router.get('/id', restricted, (req, res) => {
+router.get('/:id', restricted, (req, res) => {
    const { id } = req.params;
 
    Recipes.findRecipeById(id)
@@ -42,8 +41,27 @@ router.get('/id', restricted, (req, res) => {
       });
 })
 
+// GET recipe ingredients by recipe id
+router.get('/:id/ingredients', restricted, (req, res) => {
+   const { id } = req.params;
+
+   Recipes.findIngredientsByRecipe(id)
+      .then(ingredients => {
+         console.log(ingredients)
+         if (ingredients) {
+            res.json(ingredients);
+         } else {
+            res.status(404).json({ message: 'Could not find user with specified ID.' })
+         }
+      })
+      .catch(err => {
+         console.log(err)
+         res.status(500).json({ message: 'Server Error: Failed to get ingredients' });
+      });
+})
+
 // POST a new recipe
-router.post('/', restricted, (req, res) => {
+router.post('/', (req, res) => {
    const { id } = req.params;
    const recipe = req.body;
    console.log(recipe);

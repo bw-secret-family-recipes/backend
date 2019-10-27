@@ -1,26 +1,26 @@
 const express = require('express');
 const helmet = require('helmet');
 const logger = require('morgan');
-const cors = require('cors');
-require('dotenv').config();
 
-const AuthRouter = require('./users/auth-router');
-const RecipesRouter = require('./recipes/recipes-router');
+const AuthRouter = require('../auth/auth-router');
+const RecipesRouter = require('../routes/recipes/recipes-router');
+const IngredientsRouter = require('../routes/ingredients/ingredients-router');
 
 const server = express();
 
+// Middleware
 server.use(express.json());
-server.use(cors())
 server.use(helmet());
 server.use(logger('dev'));
 
 // Router
 server.use('/api/auth', AuthRouter);
 server.use('/api/recipes', RecipesRouter);
+server.use('/api/ingredients', IngredientsRouter);
 
 // Server Check
-server.get('/server', (req, res) => {
-   res.send(`<h2>Server is running!</h2>`)
+server.get('/', (req, res) => {
+   res.send(`<h2>Server is working!</h2>`)
 })
 
 module.exports = server;
